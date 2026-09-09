@@ -1,0 +1,59 @@
+{
+  "name": "delivery-partner-backend",
+  "version": "1.0.0",
+  "description": "Delivery Partner Auth & Signup - NestJS Backend",
+  "scripts": {
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.525.0",
+    "@nestjs/common": "^10.4.22",
+    "@nestjs/config": "^3.1.1",
+    "@nestjs/core": "^10.3.0",
+    "@nestjs/jwt": "^10.2.0",
+    "@nestjs/mapped-types": "^2.1.0",
+    "@nestjs/passport": "^10.0.3",
+    "@nestjs/platform-express": "^10.3.0",
+    "@nestjs/platform-socket.io": "^10.4.22",
+    "@nestjs/websockets": "^10.4.22",
+    "@prisma/client": "5.22.0",
+    "axios": "^1.13.6",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "cloudinary": "^2.9.0",
+    "cookie-parser": "^1.4.7",
+    "ioredis": "^5.3.2",
+    "nodemailer": "^8.0.1",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "razorpay": "^2.9.6",
+    "reflect-metadata": "^0.2.1",
+    "rxjs": "^7.8.1",
+    "socket.io": "^4.8.3",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^10.3.0",
+    "@nestjs/schematics": "^10.1.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/express": "^4.17.25",
+    "@types/multer": "^1.4.11",
+    "@types/node": "^20.19.37",
+    "@types/nodemailer": "^7.0.11",
+    "@types/passport-jwt": "^4.0.0",
+    "@types/uuid": "^9.0.7",
+    "prisma": "5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "prisma": "5.22.0",
+    "@prisma/client": "5.22.0"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "@@locale": "en",
+
+  "appName": "Dash",
+
+  "splash_tagline": "Anything, Anywhere",
+
+  "login_title": "Hello!",
+  "login_subtitle": "Welcome Back",
+  "login_heading": "Log in",
+  "login_fullname_hint": "Full name",
+  "login_phone_hint": "0000000000",
+  "login_change": "Change",
+  "login_button": "Log in",
+  "login_forgot_password": "Forgot password",
+  "login_or": "OR",
+  "login_google": "Google",
+  "login_apple": "Apple",
+  "login_facebook": "Facebook",
+  "login_terms": "T & C Apply",
+
+  "otp_title": "Enter the 4-digit code sent via\nSMS at {phone}.",
+  "@otp_title": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+  "otp_change_number": "Changed your mobile number?",
+  "otp_resend": "Resend code by SMS (0:30)",
+  "otp_button": "Next",
+  "otp_terms": "T & C Apply",
+
+  "register_title": "Create Your Account",
+  "register_fullname_hint": "Full name",
+  "register_email_phone_hint": "Email/Phone number",
+  "register_using_dash_for": "I will be using dash for",
+  "register_reference_code": "Have reference code?",
+  "register_button": "Register",
+  "register_already_account": "Already have an account?",
+  "register_login": "Log In",
+  "register_terms": "T & C Apply",
+
+  "error_enter_phone": "Please enter your phone number",
+  "error_invalid_phone": "Enter a valid 10-digit phone number",
+  "error_enter_otp": "Please enter OTP",
+  "error_invalid_otp": "Enter a valid 4-digit OTP",
+  "error_enter_name": "Please enter your full name",
+  "error_enter_email": "Please enter your email",
+  "error_invalid_email": "Enter a valid email address",
+  "error_network": "Network error. Please try again.",
+  "error_something_went_wrong": "Something went wrong. Please try again.",
+
+  "logout": "Log Out",
+  "logout_confirm": "Are you sure you want to log out?",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "retry": "Retry",
+  "loading": "Loading...",
+  "success": "Success",
+
+  "nav_home": "Home",
+  "nav_orders": "Orders",
+  "nav_wallet": "Wallet",
+  "nav_reward": "Reward",
+
+  "service_choose": "Choose your service",
+  "service_within_city": "Within City",
+  "service_outstation": "Outstation",
+
+  "saveLanguage": "Save Language",
+  "changeLanguage": "Change Language",
+  "english": "English",
+  "hindi": "Hindi",
+  "home": "Home",
+  "settings": "Settings"
+}

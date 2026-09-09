@@ -1,0 +1,76 @@
+{
+  "@@locale": "hi",
+
+  "appName": "डैश",
+
+  "splash_tagline": "कहीं भी, कुछ भी",
+
+  "login_title": "नमस्ते!",
+  "login_subtitle": "वापस स्वागत है",
+  "login_heading": "लॉग इन करें",
+  "login_fullname_hint": "पूरा नाम",
+  "login_phone_hint": "0000000000",
+  "login_change": "बदलें",
+  "login_button": "लॉग इन करें",
+  "login_forgot_password": "पासवर्ड भूल गए",
+  "login_or": "या",
+  "login_google": "गूगल",
+  "login_apple": "एप्पल",
+  "login_facebook": "फेसबुक",
+  "login_terms": "नियम और शर्तें लागू",
+
+  "otp_title": "{phone} पर SMS द्वारा भेजा गया\n4-अंकीय कोड दर्ज करें।",
+  "@otp_title": {
+    "placeholders": {
+      "phone": { "type": "String" }
+    }
+  },
+  "otp_change_number": "अपना मोबाइल नंबर बदला?",
+  "otp_resend": "SMS द्वारा कोड पुनः भेजें (0:30)",
+  "otp_button": "आगे",
+  "otp_terms": "नियम और शर्तें लागू",
+
+  "register_title": "अपना खाता बनाएं",
+  "register_fullname_hint": "पूरा नाम",
+  "register_email_phone_hint": "ईमेल/फ़ोन नंबर",
+  "register_using_dash_for": "मैं डैश का उपयोग करूंगा",
+  "register_reference_code": "रेफरेंस कोड है?",
+  "register_button": "रजिस्टर करें",
+  "register_already_account": "पहले से खाता है?",
+  "register_login": "लॉग इन करें",
+  "register_terms": "नियम और शर्तें लागू",
+
+  "error_enter_phone": "कृपया अपना फ़ोन नंबर दर्ज करें",
+  "error_invalid_phone": "10 अंकों का सही फ़ोन नंबर दर्ज करें",
+  "error_enter_otp": "कृपया OTP दर्ज करें",
+  "error_invalid_otp": "4 अंकों का सही OTP दर्ज करें",
+  "error_enter_name": "कृपया अपना पूरा नाम दर्ज करें",
+  "error_enter_email": "कृपया ईमेल दर्ज करें",
+  "error_invalid_email": "सही ईमेल पता दर्ज करें",
+  "error_network": "नेटवर्क त्रुटि। कृपया पुनः प्रयास करें।",
+  "error_something_went_wrong": "कुछ गलत हो गया। कृपया पुनः प्रयास करें।",
+
+  "logout": "लॉग आउट",
+  "logout_confirm": "क्या आप वाकई लॉग आउट करना चाहते हैं?",
+  "cancel": "रद्द करें",
+  "confirm": "पुष्टि करें",
+  "retry": "पुनः प्रयास करें",
+  "loading": "लोड हो रहा है...",
+  "success": "सफलता",
+
+  "nav_home": "होम",
+  "nav_orders": "ऑर्डर",
+  "nav_wallet": "वॉलेट",
+  "nav_reward": "रिवॉर्ड",
+
+  "service_choose": "अपनी सेवा चुनें",
+  "service_within_city": "शहर के अंदर",
+  "service_outstation": "आउटस्टेशन",
+
+  "saveLanguage": "भाषा सहेजें",
+  "changeLanguage": "भाषा बदलें",
+  "english": "अंग्रेज़ी",
+  "hindi": "हिंदी",
+  "home": "होम",
+  "settings": "सेटिंग्स"
+}

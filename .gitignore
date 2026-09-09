@@ -1,0 +1,63 @@
+########################
+# Node / TypeScript
+########################
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+
+########################
+# Environment / secrets
+########################
+.env
+.env.*
+*.local
+
+########################
+# Logs / coverage
+########################
+logs/
+*.log
+coverage/
+*.pid
+
+########################
+# Editor / OS files
+########################
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+########################
+# NestJS server build
+########################
+server/dist/
+server/node_modules/
+server/prisma/migrations/
+
+
+########################
+# React admin app
+########################
+client/dash-admin-superadmin/super-admin/node_modules/
+client/dash-admin-superadmin/super-admin/dist/
+
+
+########################
+# Flutter client app
+########################
+client/dash-client-app/client/.dart_tool/
+client/dash-client-app/client/.packages
+client/dash-client-app/client/build/
+client/dash-client-app/client/ios/Pods/
+client/dash-client-app/client/ios/.symlinks/
+client/dash-client-app/client/ios/Flutter/Flutter.framework/
+client/dash-client-app/client/ios/Flutter/Flutter.podspec
+client/dash-client-app/client/android/.gradle/
+client/dash-client-app/client/android/local.properties
+client/dash-client-app/client/android/app/profile/
+

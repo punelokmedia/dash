@@ -1,0 +1,522 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id    String @id @default(uuid())
+  email String @unique @map("email")
+  role  String @default("SUPERADMIN") @map("role")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  mobileNumber String    @unique @map("mobile_number")
+  fullName     String?   @map("full_name")
+  profilePhoto String?   @map("profile_photo")
+  email        String?   @map("email")
+  usingFor     String?   @map("using_for")
+  addressLine1 String?   @map("address_line1")
+  addressLine2 String?   @map("address_line2")
+  city         String?   @map("city")
+  state        String?   @map("state")
+  pincode      String?   @map("pincode")
+  landmark     String?   @map("landmark")
+  role         String    @default("USER") @map("role")
+  isActive     Boolean   @default(true) @map("is_active")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  lastLogin    DateTime? @map("last_login")
+  gstin        String?   @map("gstin")
+
+  referralCode     String? @unique
+  referredByCode   String? // code used during signup
+  referredByUserId String? // actual user reference
+
+  referralCount    Int   @default(0)
+  referralEarnings Float @default(0)
+
+  isReferralRewarded Boolean @default(false) // prevent duplicate reward
+
+  addresses          Address[]
+  orders             Order[]
+  bookingSessions    BookingSession[]
+  refreshTokens      RefreshToken[]
+  RewardAchievement  RewardAchievement[]
+  walletTransactions WalletTransaction[] @relation("PaymentDoneByUser")
+  userWallet         UserWallet?
+  withdrawalRequests WithdrawalRequest[]
+
+  @@map("users")
+}
+
+model DeliveryPartner {
+  id                        String    @id @default(uuid())
+  mobileNumber              String    @unique @map("mobile_number")
+  fullName                  String?   @map("full_name")
+  email                     String?   @map("email")
+  city                      String?   @map("city")
+  address                   String?   @map("address")
+  profilePhoto              String?   @map("profile_photo")
+  vehiclePhoto              String?   @map("vehicle_photo")
+  vehicleDocument           String?   @map("vehicle_document")
+  vehicleType               String?   @map("vehicle_type")
+  vehicleFuelType           String?   @map("vehicle_fuel_type")
+  vehicleBodyType           String?   @map("vehicle_body_type")
+  vehicleBrandName          String?   @map("vehicle_brand_name")
+  manufactureIn             String?   @map("manufacture_in")
+  vehicleNumber             String?   @map("vehicle_number")
+  vehicleHeight             String?   @map("vehicle_height")
+  vehicleWeight             String?   @map("vehicle_weight")
+  vehicleRegistrationNumber String?   @map("vehicle_registration_number")
+  aadhaarNumber             String?   @map("aadhaar_number")
+  aadhaarImageUrl           String?   @map("aadhaar_image_url")
+  aadhaarPdfUrl             String?   @map("aadhaar_pdf_url")
+  panCardUrl                String?   @map("pan_card_url")
+  licenseNumber             String?   @map("license_number")
+  accountNumber             String?   @map("account_number")
+  accountHolderName         String?   @map("account_holder_name")
+  ifscCode                  String?   @map("ifsc_code")
+  bankName                  String?   @map("bank_name")
+  status                    String    @default("pending") // pending | approved | rejected
+  isActive                  Boolean   @default(true) @map("is_active")
+  isOnline                  Boolean   @default(false) @map("is_online")
+  createdAt                 DateTime  @default(now()) @map("created_at")
+  lastLogin                 DateTime? @map("last_login")
+  latitude                  Float?    @map("latitude")
+  longitude                 Float?    @map("longitude")
+
+  //razorpayContactId     String?
+  //razorpayFundAccountId String?
+
+  totalEarnings Float @default(0)
+  todayEarnings Float @default(0)
+  totalPenalty  Float @default(0)
+
+  referralCode     String? @unique
+  referredByCode   String? // code used during signup
+  referredByUserId String? // actual user reference
+
+  referralCount    Int   @default(0)
+  referralEarnings Float @default(0)
+
+  isReferralRewarded Boolean @default(false) // prevent duplicate reward
+
+  orders             Order[]
+  verifiedDocuments  VerifiedDocuments?
+  DriverWallet       DriverWallet?
+  RewardAchievement  RewardAchievement[]
+  walletTransactions WalletTransaction[] @relation("DriverWalletTransactions")
+  WithdrawalRequest  WithdrawalRequest[]
+  driverEarnings     DriverEarning[]
+
+  @@map("delivery_partners")
+}
+
+model VerifiedDocuments {
+  id              String @id @default(uuid())
+  aadhaar         String @default("pending")
+  panCard         String @default("pending")
+  licence         String @default("pending")
+  bank            String @default("pending")
+  vehicleDocument String @default("pending")
+
+  partnerId String          @unique
+  partner   DeliveryPartner @relation(fields: [partnerId], references: [id])
+  // todo for who is verified this doc
+
+  @@map("verified_documents")
+}
+
+model Address {
+  id String @id @default(uuid())
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  name      String
+  phone     String
+  house     String?
+  address   String
+  pincode   String?
+  latitude  Float?
+  longitude Float?
+  isDefault Boolean  @default(false)
+  type      String   @default("other")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id            String           @id @default(uuid())
+  userId        String
+  user          User             @relation(fields: [userId], references: [id])
+  pickupAddress String
+  dropAddress   String
+  pickupLat     Float
+  pickupLng     Float
+  dropLat       Float
+  dropLng       Float
+  vehicleId     String
+  vehicle       Vehicle          @relation(fields: [vehicleId], references: [id])
+  driverId      String?
+  driver        DeliveryPartner? @relation(fields: [driverId], references: [id])
+  distanceKm    Float
+  durationMin   Float
+  fare          Float
+  status        BookingStatus
+  paymentStatus PaymentStatus?   @default(PENDING)
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  payments      Payment[]
+  driverEarning Float?
+  platformFee   Float?
+}
+
+model BookingSession {
+  id                String        @id @default(uuid())
+  userId            String
+  user              User          @relation(fields: [userId], references: [id])
+  serviceType       ServiceType
+  status            BookingStatus @default(IN_PROGRESS)
+  pickupLat         Float?
+  pickupLng         Float?
+  dropLat           Float?
+  dropLng           Float?
+  pickupCity        String?
+  dropCity          String?
+  pickupAddress     String?
+  dropAddress       String?
+  estimatedDistance Float?
+  estimatedDuration Float?
+  vehicleId         String?
+  vehicle           Vehicle?      @relation(fields: [vehicleId], references: [id])
+  estimatedFare     Float?
+  contactName       String?
+  contactMobile     String?
+  expiresAt         DateTime?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+}
+
+model Service {
+  id          String      @id @default(uuid())
+  name        String
+  type        ServiceType
+  description String?
+  icon        String?
+  isActive    Boolean     @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model Vehicle {
+  id              String           @id @default(uuid())
+  name            String
+  serviceType     ServiceType
+  baseFare        Float
+  perKmFare       Float
+  perMinuteFare   Float
+  capacity        Int
+  isActive        Boolean          @default(true)
+  imageUrl        String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  orders          Order[]
+  bookingSessions BookingSession[]
+}
+
+model Pricing {
+  id              String      @id @default(uuid())
+  serviceType     ServiceType
+  baseFare        Float
+  perKmFare       Float
+  perMinuteFare   Float
+  surgeMultiplier Float       @default(1)
+  isActive        Boolean     @default(true)
+}
+
+model Payment {
+  id String @id @default(uuid())
+
+  orderId           String          @unique
+  order             Order           @relation(fields: [orderId], references: [id])
+  amount            Float
+  provider          PaymentProvider
+  method            PaymentMethod?
+  providerOrderId   String?         @unique
+  providerPaymentId String?         @unique
+  signature         String?
+  paymentStatus     PaymentStatus   @default(PENDING)
+  failureReason     String?
+  meta              Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  walletTransactions WalletTransaction[]
+
+  @@index([createdAt])
+  @@index([paymentStatus])
+  @@index([method])
+}
+
+model VehicleTypes {
+  id            String      @id @default(uuid())
+  name          String
+  serviceType   ServiceType
+  baseFare      Float
+  perKmFare     Float
+  perMinuteFare Float
+  capacityKg    Int
+  isActive      Boolean     @default(true)
+  imageUrl      String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model RefreshToken {
+  id     String @id @default(uuid())
+  token  String @unique
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  isRevoked Boolean  @default(false)
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+}
+
+model DriverWallet {
+  id       String @id @default(uuid())
+  driverId String @unique
+
+  driver DeliveryPartner @relation(fields: [driverId], references: [id])
+
+  availableBalance Float @default(0)
+  holdBalance      Float @default(0)
+  rewardBalance    Float @default(0)
+
+  isFrozen Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions WalletTransaction[]
+}
+
+model WalletTransaction {
+  id String @id @default(uuid())
+
+  walletId String
+  wallet   DriverWallet @relation(fields: [walletId], references: [id])
+
+  driverId String?
+  driver   DeliveryPartner? @relation("DriverWalletTransactions", fields: [driverId], references: [id])
+
+  paymentDoneById String?
+  paymentDoneBy   User?   @relation("PaymentDoneByUser", fields: [paymentDoneById], references: [id])
+
+  paymentId String?
+  payment   Payment? @relation(fields: [paymentId], references: [id])
+
+  amount Float
+
+  type WalletTxnType
+
+  direction TransactionDirection @default(IN)
+
+  referenceId String?
+
+  description String?
+
+  meta Json?
+
+  createdByType TransactionSource
+
+  createdAt    DateTime    @default(now())
+  UserWallet   UserWallet? @relation(fields: [userWalletId], references: [id])
+  userWalletId String?
+
+  @@index([driverId, createdAt])
+  @@index([referenceId])
+  @@index([driverId, amount])
+}
+
+model DriverEarning {
+  id String @id @default(uuid())
+
+  driverId String
+  driver   DeliveryPartner @relation(fields: [driverId], references: [id])
+
+  date         DateTime
+  totalOrders  Int      @default(0)
+  totalEarning Float    @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([driverId, date])
+}
+
+model Reward {
+  id          String     @id @default(uuid())
+  title       String
+  description String?
+  rewardType  RewardType
+
+  // conditions
+  minOrders  Int? // e.g. 10 orders
+  minEarning Float? // e.g. 5000 earnings
+  startDate  DateTime?
+  endDate    DateTime?
+
+  rewardAmount Float // money / bonus
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  achievements RewardAchievement[]
+}
+
+model RewardAchievement {
+  id String @id @default(uuid())
+
+  rewardId String
+  reward   Reward @relation(fields: [rewardId], references: [id])
+
+  driverId String?
+  driver   DeliveryPartner? @relation(fields: [driverId], references: [id])
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  achievedAt DateTime @default(now())
+
+  isCredited Boolean @default(false)
+
+  @@index([driverId])
+  @@index([userId])
+}
+
+model WithdrawalRequest {
+  id String @id @default(uuid())
+
+  driverId String?
+  driver   DeliveryPartner? @relation(fields: [driverId], references: [id])
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  amount Float
+  method WithdrawalMethod
+
+  upiId String?
+
+  accountNumber     String?
+  ifscCode          String?
+  accountHolderName String?
+  bankName          String?
+
+  status WithdrawalStatus @default(PENDING)
+
+  adminNote   String?
+  processedAt DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([driverId, status])
+  @@index([userId, status])
+}
+
+model UserWallet {
+  id     String @id @default(uuid())
+  userId String @unique
+  user   User   @relation(fields: [userId], references: [id])
+
+  balance  Float   @default(0)
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  walletTransactions WalletTransaction[]
+
+  @@map("usersWallet")
+}
+
+enum WithdrawalMethod {
+  UPI
+  BANK
+}
+
+enum WithdrawalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  PAID
+}
+
+enum RewardType {
+  DRIVER
+  USER
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  RAZORPAY
+  UPI_QR
+  COD
+}
+
+enum PaymentMethod {
+  UPI
+  CARD
+  NETBANKING
+  WALLET
+  COD
+}
+
+enum WalletTxnType {
+  CREDIT
+  REWARD
+  DEBIT
+  PENALTY
+  ADJUSTMENT
+}
+
+enum TransactionDirection {
+  IN
+  OUT
+}
+
+enum TransactionSource {
+  DRIVER
+  USER
+  ADMIN
+  SYSTEM
+}
+
+enum ServiceType {
+  WITHIN_CITY
+  OUTSTATION
+}
+
+enum BookingStatus {
+  IN_PROGRESS
+  SEARCHING_DRIVER
+  DRIVER_ASSIGNED
+  CANCELLED
+  COMPLETED
+}

@@ -23,7 +23,11 @@ class ProfileUserCard extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.circular(16.r),
         boxShadow: const [
-          BoxShadow(color: Color(0x0F000000), blurRadius: 8, offset: Offset(0, 2)),
+          BoxShadow(
+            color: Color(0x0F000000),
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
         ],
       ),
       child: Row(
@@ -31,7 +35,7 @@ class ProfileUserCard extends StatelessWidget {
           // Avatar circle
           CircleAvatar(
             radius: 34.r,
-            backgroundColor: AppColors.lemon.withOpacity(0.15),
+            backgroundColor: AppColors.lemon.withValues(alpha: 0.15),
             child: Text(
               name.isNotEmpty ? name[0].toUpperCase() : 'U',
               style: TextStyle(
@@ -59,7 +63,10 @@ class ProfileUserCard extends StatelessWidget {
                 SizedBox(height: 2.h),
                 Text(
                   email,
-                  style: TextStyle(fontSize: 14.sp, color: Color.fromRGBO(214, 214, 214, 1)),
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Color.fromRGBO(214, 214, 214, 1),
+                  ),
                 ),
               ],
             ),

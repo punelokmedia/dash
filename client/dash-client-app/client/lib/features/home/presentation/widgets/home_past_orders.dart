@@ -26,17 +26,16 @@ class HomePastOrders extends StatelessWidget {
           Text(
             'Past order',
             style: TextStyle(
-              fontSize:   16.sp,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w600,
-              color:      const Color.fromRGBO(5, 6, 0, 1),
+              color: const Color.fromRGBO(5, 6, 0, 1),
               fontFamily: AppTextStyles.fontFamilyRoboto,
             ),
           ),
           SizedBox(height: 12.h),
-          ...orders.map((o) => _OrderTile(
-                order:        o,
-                onOrderAgain: () => onOrderAgain(o),
-              )),
+          ...orders.map(
+            (o) => _OrderTile(order: o, onOrderAgain: () => onOrderAgain(o)),
+          ),
         ],
       ),
     );
@@ -54,13 +53,13 @@ class _OrderTile extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 10.h),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color:        Colors.white,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
-            color:      Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 6,
-            offset:     const Offset(0, 2),
+            offset: const Offset(0, 2),
           ),
         ],
       ),
@@ -68,14 +67,14 @@ class _OrderTile extends StatelessWidget {
         children: [
           // ── Vehicle image ─────────────────────────────────
           SizedBox(
-            width:  65.w,
+            width: 65.w,
             height: 41.h,
             child: Image.asset(
               order.imageUrl,
               fit: BoxFit.contain,
               errorBuilder: (_, _, _) => Icon(
                 Icons.two_wheeler,
-                size:  32.r,
+                size: 32.r,
                 color: Colors.grey.shade400,
               ),
             ),
@@ -91,9 +90,9 @@ class _OrderTile extends StatelessWidget {
                 Text(
                   order.serviceType,
                   style: TextStyle(
-                    fontSize:   18.sp,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
-                    color:      AppColors.black,
+                    color: AppColors.black,
                     fontFamily: AppTextStyles.fontFamilyRoboto,
                   ),
                   maxLines: 1,
@@ -102,10 +101,7 @@ class _OrderTile extends StatelessWidget {
                 SizedBox(height: 2.h),
                 Text(
                   order.date,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color:    AppColors.grey117,
-                  ),
+                  style: TextStyle(fontSize: 14.sp, color: AppColors.grey117),
                   maxLines: 1,
                 ),
               ],
@@ -121,10 +117,10 @@ class _OrderTile extends StatelessWidget {
               Text(
                 '₹${order.amount.toStringAsFixed(0)}',
                 style: TextStyle(
-                  fontSize:   16.sp,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w600,
-                  color:      AppColors.black,
-                  fontFamily: AppTextStyles.fontFamilyRoboto
+                  color: AppColors.black,
+                  fontFamily: AppTextStyles.fontFamilyRoboto,
                 ),
               ),
               SizedBox(height: 5.h),
@@ -137,16 +133,16 @@ class _OrderTile extends StatelessWidget {
                   // padding: EdgeInsets.symmetric(
                   //     horizontal: 10.w, vertical: 4.h),
                   decoration: BoxDecoration(
-                    color:        AppColors.white,
+                    color: AppColors.white,
                     borderRadius: BorderRadius.circular(6.r),
                   ),
                   child: Text(
                     'Order Again',
                     style: TextStyle(
-                      color:      Colors.white,
-                      fontSize:   12.sp,
+                      color: Colors.white,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
-                      fontFamily: AppTextStyles.fontFamilyRoboto
+                      fontFamily: AppTextStyles.fontFamilyRoboto,
                     ),
                   ),
                 ),

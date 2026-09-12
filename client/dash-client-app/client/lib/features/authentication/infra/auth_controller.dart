@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:dash_logistics/core/network/dev_auth.dart';
+import 'package:dash_logistics/core/network/dio_provider.dart';
 import 'dart:developer';
 import 'package:dash_logistics/core/storage/storage_provider.dart';
 import 'package:dash_logistics/features/authentication/domain/models/auth_state.dart';
@@ -13,6 +15,24 @@ final authControllerProvider = AsyncNotifierProvider<AuthController, AuthState>(
 
 class AuthController extends AsyncNotifier<AuthState> {
   FlutterSecureStorage get _storage => ref.read(secureStorageProvider);
+
+  Future<void> loginForTesting() async {
+    if (!devAuthEnabled) return;
+    state = const AsyncLoading();
+    state = await AsyncValue.guard(() async {
+      final response = await ref.read(dioProvider).post('/api/v1/auth/dev/login',
+          data: {'app': 'user'});
+      final data = response.data as Map<String, dynamic>;
+      final token = data['access_token'] as String;
+      final account = data['account'] as Map<String, dynamic>;
+      await _storage.write(key: 'token', value: token);
+      await _storage.write(key: 'phone', value: account['mobile_number'] as String);
+      await _storage.write(key: 'user_id', value: account['id'] as String);
+      ref.invalidate(tokenProvider);
+      return AuthState(isLoggedIn: true, profileCompleted: true, token: token,
+          phone: account['mobile_number'] as String);
+    });
+  }
 
   /// INITIAL AUTH STATE
   @override

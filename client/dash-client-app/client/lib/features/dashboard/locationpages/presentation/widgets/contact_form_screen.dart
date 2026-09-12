@@ -16,7 +16,7 @@ class ContactFormScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final formState  = ref.watch(contactControllerProvider);
+    final formState = ref.watch(contactControllerProvider);
     final controller = ref.read(contactControllerProvider.notifier);
 
     // ✅ useRef holds the GlobalKey across rebuilds without StatefulWidget
@@ -25,7 +25,6 @@ class ContactFormScreen extends HookConsumerWidget {
     // ✅ Listen for success / error → show snackbar
     ref.listen(contactControllerProvider, (_, next) {
       if (next.successMessage != null) {
-        
         SnackbarHelper.showSuccess(context, next.successMessage!);
         controller.clearSuccess();
       }
@@ -43,12 +42,11 @@ class ContactFormScreen extends HookConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // ── Name ────────────────────────────────────────
             UnderlineField(
               initialValue: formState.name,
-              hintText:     'Full Name',
-              onChanged:    controller.updateName,
+              hintText: 'Full Name',
+              onChanged: controller.updateName,
             ),
 
             SizedBox(height: 4.h),
@@ -60,8 +58,8 @@ class ContactFormScreen extends HookConsumerWidget {
                 Expanded(
                   child: UnderlineField(
                     initialValue: formState.phone,
-                    hintText:     'Phone Number',
-                    onChanged:    controller.updatePhone,
+                    hintText: 'Phone Number',
+                    onChanged: controller.updatePhone,
                     keyboardType: TextInputType.phone,
                     inputFormatters: [
                       FilteringTextInputFormatter.digitsOnly,
@@ -85,8 +83,8 @@ class ContactFormScreen extends HookConsumerWidget {
             // ── Address ──────────────────────────────────────
             UnderlineField(
               initialValue: formState.address,
-              hintText:     'Change  House / Apartment / Shop (optional)',
-              onChanged:    controller.updateaddress,
+              hintText: 'Change  House / Apartment / Shop (optional)',
+              onChanged: controller.updateaddress,
             ),
 
             SizedBox(height: 4.h),
@@ -94,8 +92,8 @@ class ContactFormScreen extends HookConsumerWidget {
             // ── Pincode ──────────────────────────────────────
             UnderlineField(
               initialValue: formState.pincode,
-              hintText:     'Pincode (optional)',
-              onChanged:    controller.updatePincode,
+              hintText: 'Pincode (optional)',
+              onChanged: controller.updatePincode,
               keyboardType: TextInputType.number,
             ),
 
@@ -105,13 +103,15 @@ class ContactFormScreen extends HookConsumerWidget {
             Row(
               children: [
                 SizedBox(
-                  width: 20.r, height: 20.r,
+                  width: 20.r,
+                  height: 20.r,
                   child: Checkbox(
-                    value:     formState.useMobile,
+                    value: formState.useMobile,
                     onChanged: (v) => controller.toggleMobile(v!),
                     activeColor: AppColors.lemon,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4.r)),
+                      borderRadius: BorderRadius.circular(4.r),
+                    ),
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     visualDensity: VisualDensity.compact,
                   ),
@@ -120,9 +120,10 @@ class ContactFormScreen extends HookConsumerWidget {
                 Text(
                   'Use my mobile number : ${formState.phone.isNotEmpty ? formState.phone : ""}',
                   style: TextStyle(
-                      fontSize: 13.sp,
-                      color: Colors.black87,
-                      fontFamily: AppTextStyles.fontFamilyRoboto),
+                    fontSize: 13.sp,
+                    color: Colors.black87,
+                    fontFamily: AppTextStyles.fontFamilyRoboto,
+                  ),
                 ),
               ],
             ),
@@ -130,35 +131,38 @@ class ContactFormScreen extends HookConsumerWidget {
             SizedBox(height: 16.h),
 
             // ── Save as ──────────────────────────────────────
-            Text('Save as (optional)',
-                style: TextStyle(
-                    fontSize: 13.sp,
-                    color: Colors.black54,
-                    fontFamily: AppTextStyles.fontFamilyRoboto)),
+            Text(
+              'Save as (optional)',
+              style: TextStyle(
+                fontSize: 13.sp,
+                color: Colors.black54,
+                fontFamily: AppTextStyles.fontFamilyRoboto,
+              ),
+            ),
 
             SizedBox(height: 8.h),
 
             Row(
               children: [
                 SaveChip(
-                  icon:       Icons.home_outlined,
-                  label:      'Home',
+                  icon: Icons.home_outlined,
+                  label: 'Home',
                   isSelected: formState.saveAs == 'Home',
-                  onTap:      () => controller.updateSaveAs('Home'),
+                  onTap: () => controller.updateSaveAs('Home'),
                 ),
                 SizedBox(width: 10.w),
                 SaveChip(
-                  icon:       Icons.store_outlined,
-                  label:      'Shop',
+                  icon: Icons.store_outlined,
+                  label: 'Shop',
                   isSelected: formState.saveAs == 'Shop',
-                  onTap:      () => controller.updateSaveAs('Shop'),
+                  onTap: () => controller.updateSaveAs('Shop'),
                 ),
                 SizedBox(width: 10.w),
                 SaveChip(
-                  icon:       Icons.favorite_border_rounded,
-                  label:      'Other',
+                  icon: Icons.favorite_border_rounded,
+                  label: 'Other',
                   isSelected: formState.saveAs == 'Other',
-                  onTap:      () => controller.updateSaveAs('Other'),
+                  onTap: () => controller.updateSaveAs('Other'),
                 ),
               ],
             ),
@@ -167,7 +171,7 @@ class ContactFormScreen extends HookConsumerWidget {
 
             // ── Submit button ─────────────────────────────────
             SizedBox(
-              width:  double.infinity,
+              width: double.infinity,
               height: 52.h,
               child: ElevatedButton(
                 onPressed: formState.isLoading
@@ -181,7 +185,9 @@ class ContactFormScreen extends HookConsumerWidget {
                       },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.lemon,
-                  disabledBackgroundColor: AppColors.lemon.withOpacity(0.6),
+                  disabledBackgroundColor: AppColors.lemon.withValues(
+                    alpha: 0.6,
+                  ),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30.r),
@@ -189,16 +195,19 @@ class ContactFormScreen extends HookConsumerWidget {
                 ),
                 child: formState.isLoading
                     ? SizedBox(
-                        width: 20.r, height: 20.r,
+                        width: 20.r,
+                        height: 20.r,
                         child: const CircularProgressIndicator(
-                            color: Colors.white, strokeWidth: 2),
+                          color: Colors.white,
+                          strokeWidth: 2,
+                        ),
                       )
                     : Text(
                         'Enter Contact Details',
                         style: TextStyle(
-                          fontSize:   16.sp,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w600,
-                          color:      Colors.white,
+                          color: Colors.white,
                           fontFamily: AppTextStyles.fontFamilyRoboto,
                         ),
                       ),

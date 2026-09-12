@@ -1,6 +1,7 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'package:dash_logistics/core/animation/animation.dart';
+import 'package:dash_logistics/core/network/dev_auth.dart';
 import 'package:dash_logistics/core/theme/app_colors.dart';
 
 
@@ -62,6 +63,14 @@ class LoginPage extends HookConsumerWidget {
     });
 
     return Scaffold(
+      bottomNavigationBar: devAuthEnabled ? SafeArea(child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: ElevatedButton(
+          onPressed: ref.watch(authControllerProvider).isLoading ? null : () =>
+              ref.read(authControllerProvider.notifier).loginForTesting(),
+          child: const Text('Use test customer account (development)'),
+        ),
+      )) : null,
       backgroundColor: AppColors.lemon,
       body: Column(
         children: [

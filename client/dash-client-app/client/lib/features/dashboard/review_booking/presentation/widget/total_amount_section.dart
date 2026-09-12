@@ -11,10 +11,10 @@ import 'package:go_router/go_router.dart';
 const _razorpayKeyId = 'rzp_test_XXXXXXXXXXXXXXXX';
 
 // ── Static test values (swap with real data from booking state later) ─────────
-const _testOrderId    = '6be899c6-7abe-4461-a0fe-5b7ac91304d6';
-const _testName       = 'Suresh Jadhav';
-const _testPhone      = '7214512511';
-const _testEmail      = 'suresh@example.com';
+const _testOrderId = '6be899c6-7abe-4461-a0fe-5b7ac91304d6';
+const _testName = 'Suresh Jadhav';
+const _testPhone = '7214512511';
+const _testEmail = 'suresh@example.com';
 
 // ✅ Convert to ConsumerStatefulWidget so we can register callbacks once
 class TotalAmountSection extends ConsumerStatefulWidget {
@@ -25,7 +25,6 @@ class TotalAmountSection extends ConsumerStatefulWidget {
 }
 
 class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
-
   @override
   void initState() {
     super.initState();
@@ -44,9 +43,9 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
         if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content:         Text(error),
+            content: Text(error),
             backgroundColor: Colors.red.shade600,
-            behavior:        SnackBarBehavior.floating,
+            behavior: SnackBarBehavior.floating,
           ),
         );
       };
@@ -54,20 +53,22 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
   }
 
   void _onNextTapped() {
-    ref.read(paymentControllerProvider.notifier).initiatePayment(
-      orderId:       _testOrderId,
-      customerName:  _testName,
-      customerPhone: _testPhone,
-      customerEmail: _testEmail,
-      razorpayKeyId: _razorpayKeyId,
-      description:   'Dash Logistics Delivery',
-    );
+    ref
+        .read(paymentControllerProvider.notifier)
+        .initiatePayment(
+          orderId: _testOrderId,
+          customerName: _testName,
+          customerPhone: _testPhone,
+          customerEmail: _testEmail,
+          razorpayKeyId: _razorpayKeyId,
+          description: 'Dash Logistics Delivery',
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     final paymentState = ref.watch(paymentControllerProvider);
-    final isLoading    = paymentState.status == PaymentStatus.loading;
+    final isLoading = paymentState.status == PaymentStatus.loading;
 
     return Column(
       children: [
@@ -79,10 +80,10 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
             Image.asset(
               "assets/Images/Banknotes.png",
               height: 28.h,
-              width:  28.w,
+              width: 28.w,
               errorBuilder: (_, _, _) => Icon(
                 Icons.currency_rupee,
-                size:  24.sp,
+                size: 24.sp,
                 color: AppColors.lemongreen,
               ),
             ),
@@ -91,8 +92,8 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
               "Total Amount",
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize:   14.sp,
-                color:      AppColors.lemongreen,
+                fontSize: 14.sp,
+                color: AppColors.lemongreen,
               ),
             ),
             const Spacer(),
@@ -100,8 +101,8 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
               "₹455",
               style: TextStyle(
                 fontWeight: FontWeight.w700,
-                fontSize:   15.sp,
-                color:      Colors.black87,
+                fontSize: 15.sp,
+                color: Colors.black87,
               ),
             ),
           ],
@@ -112,13 +113,15 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
         // ── Next button → triggers Razorpay ──────────────────────────
         SizedBox(
           height: 52.h,
-          width:  double.infinity,
+          width: double.infinity,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor:         AppColors.lemongreen,
-              disabledBackgroundColor: AppColors.lemongreen.withOpacity(0.6),
-              foregroundColor:         Colors.white,
-              elevation:               2,
+              backgroundColor: AppColors.lemongreen,
+              disabledBackgroundColor: AppColors.lemongreen.withValues(
+                alpha: 0.6,
+              ),
+              foregroundColor: Colors.white,
+              elevation: 2,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.r),
               ),
@@ -126,18 +129,18 @@ class _TotalAmountSectionState extends ConsumerState<TotalAmountSection> {
             onPressed: isLoading ? null : _onNextTapped,
             child: isLoading
                 ? SizedBox(
-                    width:  22.w,
+                    width: 22.w,
                     height: 22.h,
                     child: const CircularProgressIndicator(
-                      color:       Colors.white,
+                      color: Colors.white,
                       strokeWidth: 2.5,
                     ),
                   )
                 : Text(
                     "Next",
                     style: TextStyle(
-                      fontSize:      16.sp,
-                      fontWeight:    FontWeight.w700,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w700,
                       letterSpacing: 0.5,
                     ),
                   ),

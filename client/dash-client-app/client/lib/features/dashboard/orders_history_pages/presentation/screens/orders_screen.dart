@@ -18,7 +18,7 @@ class OrdersScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isOngoing = useState(true);
-    final navIndex  = useState(1);
+    final navIndex = useState(1);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -58,10 +58,7 @@ class OrdersScreen extends HookConsumerWidget {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: Container(
-                    height: 40.h,
-                    color: AppColors.lemongreen,
-                  ),
+                  child: Container(height: 40.h, color: AppColors.lemongreen),
                 ),
 
                 // ── White floating card — sits above green, matches home
@@ -78,7 +75,7 @@ class OrdersScreen extends HookConsumerWidget {
                       borderRadius: BorderRadius.circular(28.r),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.13),
+                          color: Colors.black.withValues(alpha: 0.13),
                           blurRadius: 16,
                           offset: const Offset(0, 4),
                         ),
@@ -104,9 +101,11 @@ class OrdersScreen extends HookConsumerWidget {
                               switchOutCurve: Curves.easeInOut,
                               child: isOngoing.value
                                   ? const OngoingOrders(
-                                      key: ValueKey('ongoing'))
+                                      key: ValueKey('ongoing'),
+                                    )
                                   : const HistoryOrders(
-                                      key: ValueKey('history')),
+                                      key: ValueKey('history'),
+                                    ),
                             ),
                           ),
                         ],

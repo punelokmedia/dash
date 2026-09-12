@@ -63,9 +63,7 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
             final barW = constraints.maxWidth;
             final itemW = barW / _items.length;
             final notchCx = itemW * widget.currentIndex + itemW / 2;
-      
-            
-      
+
             return Stack(
               clipBehavior: Clip.none,
               children: [
@@ -83,11 +81,11 @@ class _HomeBottomNavBarState extends State<HomeBottomNavBar> {
                       notchDepth: bubbleD * 0.40,
                       pillR: barH / 2,
                       color: AppColors.green71,
-                      borderColor: Colors.white.withOpacity(0.30),
+                      borderColor: Colors.white.withValues(alpha: 0.30),
                     ),
                   ),
                 ),
-      
+
                 // ── items row ────────────────────────────────────────────────
                 Positioned(
                   bottom: 0,
@@ -257,7 +255,7 @@ class _BarPainter extends CustomPainter {
       ..close();
 
     // soft shadow
-    canvas.drawShadow(p, Colors.black.withOpacity(0.35), 10, true);
+    canvas.drawShadow(p, Colors.black.withValues(alpha: 0.35), 10, true);
     // fill
     canvas.drawPath(
       p,
@@ -313,7 +311,7 @@ class _NavTile extends StatelessWidget {
               ),
               SizedBox(height: 3.h),
               Text(
-                item.label, 
+                item.label,
                 style: TextStyle(
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w500,
@@ -348,7 +346,10 @@ class _NavTile extends StatelessWidget {
                       //   painter: _BowlPainter(color: Colors.white),
                       // ),
                       child: SizedBox(
-                        child: Image.asset("assets/Icons/home/navbar_selected.png",)),
+                        child: Image.asset(
+                          "assets/Icons/home/navbar_selected.png",
+                        ),
+                      ),
                     ),
 
                     // ── 2. CIRCLE + ICON on top of bowl ───────────────────
@@ -365,7 +366,7 @@ class _NavTile extends StatelessWidget {
                             shape: BoxShape.circle,
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.20),
+                                color: Colors.black.withValues(alpha: 0.20),
                                 blurRadius: 14,
                                 offset: const Offset(0, 5),
                               ),
